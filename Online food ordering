@@ -1,0 +1,326 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+string a[] = {"Nanakheda", "Kothi Road", "Sanwer Road", "Mahakal Temple", "Tower Chowk"};
+double deliveryCharges[] = {2.0, 3.0, 4.0, 2.5, 3.5}; // Define delivery charges for each locality
+char p=true;
+
+class Person {
+public:
+    string name;
+    int mob_no;
+    string email;
+    string address;
+    int localityChoice;
+
+    void Details() {
+        cout << "Name: ";
+        cin >> name;
+        cout << "Mobile Number: ";
+        cin >> mob_no;
+        cout << "Email: ";
+        cin >> email;
+        cout << "Address: ";
+        cin.ignore();
+        getline(cin, address);
+        ofstream fout("d:/online food order.txt",ios_base::app);
+		fout<<"\nName: "<<name<<"\nMobile number: "<<mob_no<<"\nEmail: "<<email<<"\nAddress: "<<address;
+		fout.close();
+        
+
+        cout << "Select your locality:" << endl;
+        for (int i = 0; i < 5; i++) {
+            cout << i + 1 << "." << a[i] << endl;
+        }
+
+        while (true) {
+            cout << "Enter your choice (1-5): ";
+            cin >> localityChoice;
+            if (localityChoice >= 1 && localityChoice <= 5) {
+                cout << "You selected Locality " << a[localityChoice - 1] << endl;
+                break;
+            } else {
+                cout << "Cannot deliver here." << endl << "\n";
+            }
+        }
+    }
+};
+
+class Menu {
+public:
+    virtual double getPrice(int itemNumber) = 0;
+    virtual void displayMenu() = 0;
+};
+
+class Pizza : public Menu {
+public:
+    double getPrice(int itemNumber);
+    void displayMenu();
+};
+
+class Burger : public Menu {
+public:
+    double getPrice(int itemNumber);
+    void displayMenu();
+};
+
+class Sandwich : public Menu {
+public:
+    double getPrice(int itemNumber);
+    void displayMenu();
+};
+
+class Pasta : public Menu {
+public:
+    double getPrice(int itemNumber);
+    void displayMenu();
+};
+
+class Dosa : public Menu {
+public:
+    double getPrice(int itemNumber);
+    void displayMenu();
+};
+
+// Define getPrice and displayMenu for each menu item
+double Pizza::getPrice(int itemNumber) {
+    switch (itemNumber) {
+        case 1:
+            return 8.99; // Price of Margherita Pizza
+        case 2:
+            return 9.99; // Price of Pepperoni Pizza
+        case 3:
+            return 10.99; // Price of Veggie Supreme Pizza
+        case 4:
+            return 10.99; // Price of Hawaiian Pizza
+        case 5:
+            return 11.99; // Price of BBQ Chicken Pizza
+        default:
+            return 0.0; // Invalid item
+    }
+}
+
+void Pizza::displayMenu() {
+    cout << "\nPizza Menu:" << endl;
+    cout << "1. Margherita Pizza - $8.99" << endl;
+    cout << "2. Pepperoni Pizza - $9.99" << endl;
+    cout << "3. Veggie Supreme Pizza - $10.99" << endl;
+    cout << "4. Hawaiian Pizza - $10.99" << endl;
+    cout << "5. BBQ Chicken Pizza - $11.99" << endl;
+}
+
+double Burger::getPrice(int itemNumber) {
+    switch (itemNumber) {
+        case 1:
+            return 5.99; // Price of Cheeseburger
+        case 2:
+            return 6.99; // Price of Veggie Burger
+        case 3:
+            return 7.99; // Price of Bacon Burger
+        case 4:
+            return 7.99; // Price of BBQ Burger
+        case 5:
+            return 8.99; // Price of Mushroom Swiss Burger
+        default:
+            return 0.0; // Invalid item
+    }
+}
+
+void Burger::displayMenu() {
+    cout << "\nBurger Menu:" << endl;
+    cout << "1. Cheeseburger - $5.99" << endl;
+    cout << "2. Veggie Burger - $6.99" << endl;
+    cout << "3. Bacon Burger - $7.99" << endl;
+    cout << "4. BBQ Burger - $7.99" << endl;
+    cout << "5. Mushroom Swiss Burger - $8.99" << endl;
+}
+
+double Sandwich::getPrice(int itemNumber) {
+    switch (itemNumber) {
+        case 1:
+            return 6.49; // Price of Turkey Club Sandwich
+        case 2:
+            return 5.99; // Price of BLT Sandwich
+        case 3:
+            return 6.99; // Price of Veggie Wrap
+        case 4:
+            return 7.49; // Price of Chicken Caesar Wrap
+        case 5:
+            return 6.99; // Price of Tuna Salad Sandwich
+        default:
+            return 0.0; // Invalid item
+    }
+}
+
+void Sandwich::displayMenu() {
+    cout << "\nSandwich Menu:" << endl;
+    cout << "1. Turkey Club Sandwich - $6.49" << endl;
+    cout << "2. BLT Sandwich - $5.99" << endl;
+    cout << "3. Veggie Wrap - $6.99" << endl;
+    cout << "4. Chicken Caesar Wrap - $7.49" << endl;
+    cout << "5. Tuna Salad Sandwich - $6.99" << endl;
+}
+
+double Pasta::getPrice(int itemNumber) {
+    switch (itemNumber) {
+        case 1:
+            return 9.99; // Price of Spaghetti Carbonara
+        case 2:
+            return 10.99; // Price of Fettuccine Alfredo
+        case 3:
+            return 11.99; // Price of Lasagna
+        case 4:
+            return 9.99; // Price of Penne Arrabbiata
+        case 5:
+            return 10.99; // Price of Pesto Linguine
+        default:
+            return 0.0; // Invalid item
+    }
+}
+
+void Pasta::displayMenu() {
+    cout << "\nPasta Menu:" << endl;
+    cout << "1. Spaghetti Carbonara - $9.99" << endl;
+    cout << "2. Fettuccine Alfredo - $10.99" << endl;
+    cout << "3. Lasagna - $11.99" << endl;
+    cout << "4. Penne Arrabbiata - $9.99" << endl;
+    cout << "5. Pesto Linguine - $10.99" << endl;
+}
+
+double Dosa::getPrice(int itemNumber) {
+    switch (itemNumber) {
+        case 1:
+            return 6.99; // Price of Masala Dosa
+        case 2:
+            return 7.49; // Price of Paneer Dosa
+        case 3:
+            return 6.99; // Price of Onion Uttapam
+        case 4:
+            return 6.49; // Price of Plain Dosa
+        case 5:
+            return 7.99; // Price of Rava Dosa
+        default:
+            return 0.0; // Invalid item
+    }
+}
+
+void Dosa::displayMenu() {
+    cout << "\nDosa Menu:" << endl;
+    cout << "1. Masala Dosa - $6.99" << endl;
+    cout << "2. Paneer Dosa - $7.49" << endl;
+    cout << "3. Onion Uttapam - $6.99" << endl;
+    cout << "4. Plain Dosa - $6.49" << endl;
+    cout << "5. Rava Dosa - $7.99" << endl;
+}
+
+int main() {
+    Person A;
+    A.Details();
+
+    Pizza pizzaMenu;
+    Burger burgerMenu;
+    Sandwich sandwichMenu;
+    Pasta pastaMenu;
+    Dosa dosaMenu;
+    double totalCost = 0.0; // Initialize the total cost
+    while(p==true){
+    	cout << "\nSelect from the Menu:" << endl;
+	    cout << "1. Pizza" << endl;
+	    cout << "2. Burger" << endl;
+	    cout << "3. Sandwich" << endl;
+	    cout << "4. Pasta" << endl;
+	    cout << "5. Dosa" << endl;
+	    cout << "6.Exit and get bill"<<endl;
+	
+	    int choice;
+	    cout << "\nEnter your choice: ";
+	    cin >> choice;  
+	
+	    switch (choice) {
+	    case 1:
+	        pizzaMenu.displayMenu();
+	        int pizzaChoice;
+	        cout << "\nEnter your choice (1-5): ";
+	        cin >> pizzaChoice;
+	        if (pizzaChoice >= 1 && pizzaChoice <= 5) {
+	            totalCost += pizzaMenu.getPrice(pizzaChoice);
+	        } else {
+	            cout << "Invalid choice!" << endl;
+	        }
+	        break;
+	    case 2:
+	        burgerMenu.displayMenu();
+	        int burgerChoice;
+	        cout << "\nEnter your choice (1-5): ";
+	        cin >> burgerChoice;
+	        if (burgerChoice >= 1 && burgerChoice <= 5) {
+	            totalCost += burgerMenu.getPrice(burgerChoice);
+	        } else {
+	            cout << "Invalid choice!" << endl;
+	        }
+	        break;
+	    case 3:
+	        sandwichMenu.displayMenu();
+	        int sandwichChoice;
+	        cout << "\nEnter your choice (1-5): ";
+	        cin >> sandwichChoice;
+	        if (sandwichChoice >= 1 && sandwichChoice <= 5) {
+	            totalCost += sandwichMenu.getPrice(sandwichChoice);
+	        } else {
+	            cout << "Invalid choice!" << endl;
+	        }
+	        break;
+	    case 4:
+	        pastaMenu.displayMenu();
+	        int pastaChoice;
+	        cout << "\nEnter your choice (1-5): ";
+	        cin >> pastaChoice;
+	        if (pastaChoice >= 1 && pastaChoice <= 5) {
+	            totalCost += pastaMenu.getPrice(pastaChoice);
+	        } else {
+	            cout << "Invalid choice!" << endl;
+	        }
+	        break;
+	    case 5:
+	        dosaMenu.displayMenu();
+	        int dosaChoice;
+	        cout << "\nEnter your choice (1-5): ";
+	        cin >> dosaChoice;
+	        if (dosaChoice >= 1 && dosaChoice <= 5) {
+	            totalCost += dosaMenu.getPrice(dosaChoice);
+	        } else {
+	            cout << "Invalid choice!" << endl;
+	        }
+	        break;
+	    case 6: {
+		    
+		    p = false;
+		    break;
+		}
+		default:
+		    cout << "Invalid choice!" << endl;
+		    break;
+		}
+	}
+	
+	int localityChoice = A.localityChoice; // Declare localityChoice within its own scope
+    cout << "\nOrder Summary:" << endl;
+    cout << "Total Cost (before delivery charges): $" << totalCost << endl;
+
+    // Calculate delivery charges based on the selected locality
+    if (localityChoice >= 1 && localityChoice <= 5) {
+        double deliveryCharge = deliveryCharges[localityChoice - 1];
+        totalCost += deliveryCharge;
+        cout << "Delivery Charge for " << a[localityChoice - 1] << ": $" << deliveryCharge << endl;
+    } else {
+        cout << "Invalid locality choice!" << endl;
+    }
+
+    cout << "Updated Total Cost (including delivery charges): $" << totalCost << endl;
+    ofstream fout("d:/online food order.txt",ios_base::app);
+	fout<<"\nUpdated Total Cost (including delivery charges): $" << totalCost;
+	fout.close();    
+    return 0;
+}
